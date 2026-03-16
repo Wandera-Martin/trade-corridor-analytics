@@ -23,7 +23,7 @@ Using a simulated dataset representing shipments moving from **Mombasa Port → 
 
 The goal is to move from **reactive reporting → proactive risk prediction**.
 
-
+---
 
 # 🎯 Problem Statement
 
@@ -35,7 +35,7 @@ The key question addressed in this project:
 
 If successful, such predictions could help corridor operators allocate resources more efficiently and reduce economic losses from congestion.
 
-
+---
 
 # 📊 Dataset
 
@@ -66,7 +66,7 @@ Each record represents a shipment with:
 |rainfall_indicator|Weather condition|
 |delay_reason|Operational delay cause|
 
-
+---
 
 # 🧠 Feature Engineering
 
@@ -153,7 +153,7 @@ Example visualizations include:
 - delay reason distributions
     
 
-
+---
 
 # 🤖 Machine Learning Model
 
@@ -188,7 +188,7 @@ A **time-based train/test split** was used to simulate real deployment:
 
 This avoids temporal data leakage.
 
-
+---
 
 # 📊 Results
 
@@ -205,7 +205,7 @@ Key findings:
 
 The model produces a **delay risk probability score** between 0 and 1.
 
--
+---
 
 # 🎯 Operational Use Case
 
