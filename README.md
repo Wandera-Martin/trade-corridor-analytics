@@ -1,227 +1,313 @@
-# 🚛 Northern Corridor Trade Analytics
+# 🚛 Trade Corridor Delay Risk Prediction
 
-### Data Science Project | Corridor Efficiency & Delay Intelligence
+### Predictive Analytics for Border Operations (Mombasa → Malaba → Kampala)
 
+## 📌 Overview
 
-## 📌 Project Overview
+Border delays increase logistics costs, slow down trade, and create inefficiencies across supply chains—especially for landlocked countries.
 
-This project analyzes operational shipment data from the **Mombasa → Malaba → Kampala trade corridor**, one of East Africa’s most critical logistics routes.
+This project demonstrates how **data analytics and machine learning** can be used to predict shipment delay risk along a trade corridor.
 
-Trade corridors are essential economic arteries. Delays at ports and borders increase transport costs, inflate consumer prices, reduce export competitiveness, and weaken regional trade efficiency.
+Using a simulated dataset representing shipments moving from **Mombasa Port → Malaba Border → Kampala**, the project builds a full analytics pipeline including:
 
-This project applies **data science and analytics techniques** to understand:
+- Data validation
+    
+- Feature engineering
+    
+- Exploratory analysis
+    
+- Time-series trend analysis
+    
+- Machine learning delay prediction
+    
 
-* Border clearance behavior
-* Delay patterns
-* Operational bottlenecks
-* Economic impact of inefficiencies
-* Predictive delay risk
+The goal is to move from **reactive reporting → proactive risk prediction**.
 
-The goal is to transform corridor movement data into actionable intelligence.
+---
 
+# 🎯 Problem Statement
 
-## 🎯 Problem Statement
+Border operations often identify congestion **after delays occur**.
 
-Border delays and transit inefficiencies increase the cost of trade for landlocked countries like Uganda.
+The key question addressed in this project:
 
-However, corridor performance is often:
+> Can we predict shipment delays before they happen using operational and environmental signals?
 
-* Poorly monitored
-* Reactively managed
-* Not data-driven
-* Lacking predictive insights
+If successful, such predictions could help corridor operators allocate resources more efficiently and reduce economic losses from congestion.
 
-This project answers:
+---
 
-> How can shipment-level data be used to measure, explain, and predict corridor performance?
+# 📊 Dataset
 
+A **synthetic but realistic dataset** simulates operational shipment data across the Northern Corridor.
 
-## 🧠 Core Analysis Questions
+Each record represents a shipment with:
 
-The analysis is structured around four categories:
+- Shipment identifiers
+    
+- Transport timestamps
+    
+- Cargo characteristics
+    
+- Environmental conditions
+    
+- Delay reasons
+    
 
-### 1️⃣ Descriptive (What is happening?)
+### Example features
 
-* What is the average border clearance time?
-* What is the overall delay rate?
-* Which goods categories experience the highest delays?
-* What are monthly shipment volume trends?
+|Feature|Description|
+|---|---|
+|depart_time|Shipment departure timestamp|
+|clearance_hours|Border clearance duration|
+|goods_category|Type of cargo|
+|weight_kg|Shipment weight|
+|fuel_price_usd_per_litre|Fuel market signal|
+|rainfall_indicator|Weather condition|
+|delay_reason|Operational delay cause|
 
+---
 
-### 2️⃣ Diagnostic (Why is it happening?)
+# 🧠 Feature Engineering
 
-* Does rainfall increase clearance times?
-* Are certain days of the week more delay-prone?
-* Is there a relationship between shipment volume and delay frequency?
-* What are the most common delay reasons?
+Key features were engineered to capture corridor behavior:
 
+### Operational Metrics
 
-### 3️⃣ Predictive (What will happen?)
+- `clearance_hours`
+    
+- `travel_to_border_hours`
+    
+- `total_transit_hours`
+    
 
-* Can we predict whether a shipment will be delayed?
-* Can we forecast high-delay days?
-* Which factors most influence delay probability?
+### Time-Based Signals
 
+- `depart_month`
+    
+- `depart_hour`
+    
+- `day_of_week`
+    
+- `is_weekend`
+    
 
-### 4️⃣ Prescriptive (What should be done?)
+### Shipment Characteristics
 
-* What operational improvements would reduce delays most?
-* What is the estimated economic savings if clearance time decreases by 2 hours?
-* Which goods categories should be prioritized for intervention?
+- `is_heavy`
+    
+- `is_high_value`
+    
 
+### Congestion Indicators
 
-## 📊 Dataset Description
+- `rolling_delay_rate_30`
+    
+- `rolling_clearance_mean_30`
+    
 
-### Type: Synthetic Operational Shipment Dataset
+These features allow the model to capture **operational congestion patterns**.
 
-### Corridor: Mombasa → Malaba → Kampala
+---
 
-### Size: 1,000 shipments
+# 📈 Exploratory Analysis
 
-Because real shipment-level border data is not publicly accessible due to security and commercial sensitivity, a **realistic synthetic dataset** was generated.
+The analysis identified several key insights:
 
-This approach is common in professional portfolios when:
+### Clearance Time Distribution
 
-* Real-world operational data is proprietary
-* Access is restricted
-* Privacy concerns apply
+Most shipments clear quickly, but a **long tail of extreme delays** exists.
 
-The dataset simulates realistic logistics behavior including skewed clearance distributions, operational delays, and weather influence.
+### Delay Drivers
 
+Higher delay probability is associated with:
 
-### Dataset Fields
+- rainfall conditions
+    
+- heavier shipments
+    
+- congestion momentum
+    
+- peak operating hours
+    
 
-| Column                   | Description                                |
-| ------------------------ | ------------------------------------------ |
-| shipment_id              | Unique shipment identifier                 |
-| truck_id                 | Truck identifier                           |
-| origin_port              | Port of departure (Mombasa)                |
-| border                   | Border crossing point (Malaba)             |
-| destination              | Final destination (Kampala)                |
-| depart_time              | Departure timestamp                        |
-| border_arrival_time      | Arrival at border                          |
-| border_exit_time         | Clearance completion time                  |
-| arrival_time             | Final arrival time                         |
-| goods_category           | Type of goods transported                  |
-| weight_kg                | Shipment weight                            |
-| declared_value_usd       | Cargo declared value                       |
-| fuel_price_usd_per_litre | Fuel price at time of shipment             |
-| rainfall_indicator       | Weather condition (0 = no rain, 1 = rain)  |
-| delay_reason             | Operational cause of delay (if applicable) |
+### Time Trends
 
+Trend analysis revealed:
 
-## 🔍 Derived Features
+- seasonal congestion variation
+    
+- weekly operational patterns
+    
+- rolling congestion signals
+    
 
-During feature engineering, additional metrics were created:
+Example visualizations include:
 
-* `clearance_hours`
-* `total_transit_hours`
-* `is_delayed` (clearance > 12 hours)
-* `month`
-* `day_of_week`
-* `delay_cost_usd` (simulated economic impact)
+- delay rate by cargo category
+    
+- rainfall impact on clearance time
+    
+- rolling congestion trends
+    
+- delay reason distributions
+    
 
+---
 
-## 🏗 Analytical Approach
+# 🤖 Machine Learning Model
 
-The project follows a structured data science workflow:
+Two models were evaluated:
 
-1. Data Understanding & Validation
-2. Feature Engineering
-3. Exploratory Data Analysis (EDA)
-4. Statistical Relationship Analysis
-5. Delay Cost Simulation
-6. Optional Predictive Modeling
-7. Business Insight & Recommendation Layer
+|Model|Purpose|
+|---|---|
+|Logistic Regression|Baseline classifier|
+|Random Forest|Nonlinear ensemble model|
 
+Evaluation metrics:
 
-## 📈 Key Metrics
+- Accuracy
+    
+- Precision
+    
+- Recall
+    
+- F1 Score
+    
+- ROC AUC
+    
 
-* Average Border Clearance Time
-* Delay Rate (%)
-* Monthly Shipment Volume
-* Delay Rate by Goods Category
-* Clearance Time Distribution
-* Estimated Economic Cost of Delays
+### Evaluation Strategy
 
+A **time-based train/test split** was used to simulate real deployment:
 
-## 💰 Economic Impact Simulation
+- Train on historical shipments
+    
+- Test on future shipments
+    
 
-To demonstrate policy relevance, a cost-of-delay model was introduced:
+This avoids temporal data leakage.
 
-Assumption:
-Each additional clearance hour costs $150 per truck.
+---
 
-This enables estimation of:
+# 📊 Results
 
-* Total corridor delay cost
-* Potential savings from efficiency improvements
-* Cost-benefit scenarios
+The **Random Forest model** achieved the best performance.
 
+Key findings:
 
-## 🛠 Tools & Technologies
+- Delay probability is strongly influenced by **historical congestion momentum**
+    
+- Environmental conditions (rainfall) affect clearance time
+    
+- Operational timing (hour/day) impacts delay likelihood
+    
 
-* Python
-* Pandas
-* NumPy
-* Matplotlib / Seaborn
-* Plotly
-* Scikit-learn (optional predictive modeling)
-* Jupyter Notebook
+The model produces a **delay risk probability score** between 0 and 1.
 
-## 📁 Project Structure
+---
 
-```
-trade-corridor-analytics/
-│
-├── data/
-│   ├── raw/
-│   └── processed/
-│
-├── notebooks/
-│   ├── 01_data_understanding.ipynb
-│   ├── 02_feature_engineering.ipynb
-│   ├── 03_eda_analysis.ipynb
-│   └── 04_modeling.ipynb
-│
-├── src/
-│
-├── reports/
-│   ├── figures/
-│   └── executive_summary.md
-│
-├── requirements.txt
+# 🎯 Operational Use Case
+
+The predicted risk score can support proactive corridor management.
+
+Example use cases:
+
+- Allocate additional customs officers during high-risk periods
+    
+- Increase scanning capacity on predicted congestion days
+    
+- Prioritize high-value shipments
+    
+- Monitor corridor congestion signals in real time
+    
+
+This transforms border management from **reactive → predictive operations**.
+
+---
+
+# 🛠 Tech Stack
+
+Python  
+Pandas  
+NumPy  
+Scikit-learn  
+Matplotlib  
+Seaborn
+
+Machine Learning Techniques:
+
+- Feature engineering
+    
+- Time-based model evaluation
+    
+- Classification modeling
+    
+- Feature importance analysis
+    
+- Probability threshold tuning
+    
+
+---
+
+# 📂 Project Structure
+
+trade-corridor-analytics  
+│  
+├── data  
+│   ├── raw  
+│   └── processed  
+│  
+├── notebooks  
+│   ├── 01_data_validation.ipynb  
+│   ├── 02_feature_engineering.ipynb  
+│   ├── 03_eda_analysis.ipynb  
+│   └── 04_modeling.ipynb  
+│  
+├── reports  
+│   ├── figures  
+│   └── models  
+│  
 └── README.md
-```
 
-## 🚀 Why This Project Matters
+---
 
-Trade corridors directly affect:
+# 🚀 Future Improvements
 
-* National inflation
-* Fuel prices
-* Export competitiveness
-* Regional integration
-* Government revenue
+Potential extensions include:
 
-By transforming operational shipment data into analytics insights, this project demonstrates how data science can:
+- Real-time shipment tracking integration
+    
+- Walk-forward validation for time-series modeling
+    
+- Model drift detection
+    
+- Deployment as a delay-risk prediction API
+    
+- Interactive analytics dashboard
+    
 
-* Improve logistics performance
-* Support economic policy decisions
-* Enable predictive corridor monitoring
-* Quantify inefficiency costs
+---
 
-## 📌 Future Extensions
+# 📌 Key Takeaways
 
-* Real GPS tracking integration
-* Time-series delay forecasting
-* Anomaly detection for corruption risk
-* Corridor performance scoring system
-* Interactive dashboard deployment (Streamlit / Power BI)
+This project demonstrates how data science can support:
 
+- logistics optimization
+    
+- border operations management
+    
+- infrastructure analytics
+    
+- predictive decision-making
+    
 
-## 👤 Author
+The approach can be extended to **real-world trade corridors and supply chain systems**.
+
+---
+
+# 👤 Author
 
 Martin Wandera
------
-Data Science & Trade Analytics
+
+Data Engineering | Data Science | AI Systems
